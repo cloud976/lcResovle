@@ -9,18 +9,19 @@ class TreeNode(object):
 class BinaryTree(object):
     def __init__(self, lst):
         lstLen = len(lst)
-        if lstLen == 0:
-            self.root = None
+        self.lst = lst
+        self.len = lstLen
+        self._initNode(0)
+        
+    def _initNode(self,i):
+        if i >= self.len:
+            node = None
+        elif self.lst[i] == None:
+            node = None
         else:
-            self.root = TreeNode(lst[0], None, None)
-        for i in range(1, lstLen):
-            if lst[i] != None:
-                treeNode = TreeNode(lst[i], None, None)
-                if i*2<lstLen and lst[i*2]!=None:
-                    treeNode.left = TreeNode(lst[i*2], None, None)
-                if i*2+1<lstLen and lst[i*2+1]!=None:
-                    treeNode.right = TreeNode(lst[i*2+1], None, None)
+            node = TreeNode(self.lst[i], self._initNode(i*2+1), self._initNode(i*2+2))
+        if i == 0 and self.lst[i] != None:
+            self.root = node
+        return node
+        
             
-                    
-bt = BinaryTree([1,2,3,4,5,6])
-print bt.root
